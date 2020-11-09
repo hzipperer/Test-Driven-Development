@@ -3,10 +3,11 @@ class Invoice:
     def __init__(self):
         self.items = {}
 
-    def addProduct(self, qnt, price, discount):
+    def addProduct(self, qnt, price, discount, inStock):
         self.items["qnt"] = qnt
         self.items["unit_price"] = price
         self.items["discount"] = discount
+        self.items["instock"] = inStock
         return self.items
 
     def totalImpurePrice(self, products):
@@ -44,3 +45,20 @@ class Invoice:
                 continue
             else:
                 return userInput
+
+    def productsList(self, products):
+        productList = ""
+        for k in products:
+            productList = productList + " " + k
+        return productList
+
+    def checkInStock(self, products):
+        inStock = None
+        productList =""
+        for k, v in products.items():
+            inStock = v["instock"]
+            if inStock:
+                productList = productList + " " + k + ": In Stock"
+            else:
+                productList = productList + " " + k + ": Not in Stock"
+        return productList

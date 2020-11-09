@@ -3,8 +3,8 @@ from Invoice import Invoice
 
 @pytest.fixture()
 def products():
-    products = {"Pen": {"qnt": 10, "unit_price": 3.75, "discount": 5},
-                "Notebook": {"qnt": 5, "unit_price": 7.5, "discount": 10}}
+    products = {"Pen": {"qnt": 10, "unit_price": 3.75, "discount": 5, "instock": True},
+                "Notebook": {"qnt": 5, "unit_price": 7.5, "discount": 10, "instock": True}}
     return products
 
 @pytest.fixture()
@@ -22,3 +22,11 @@ def test_CanCalculateTotalDiscount(invoice, products):
 def test_CanCalculateTotalPurePrice(invoice, products):
     invoice.totalPurePrice(products)
     assert invoice.totalPurePrice(products) == 69.38
+
+def test_CanListProducts(invoice, products):
+    invoice.productsList(products)
+    assert invoice.productsList(products) == " Pen Notebook"
+
+def test_CheckInStock(invoice, products):
+    invoice.checkInStock(products)
+    assert invoice.checkInStock(products) == " Pen: In Stock Notebook: In Stock"
